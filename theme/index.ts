@@ -1,5 +1,16 @@
 import { extendTheme } from "@chakra-ui/react"
+import { types } from "./typeColors"
 
-const theme = extendTheme({})
+export type TypeColor = {
+	background: string
+	borderTop: string
+	borderBottom: string
+}
+
+const theme = extendTheme({
+	colors: {
+		types,
+	},
+})
 
 export default theme

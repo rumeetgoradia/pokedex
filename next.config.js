@@ -3,7 +3,7 @@ const { withPlaiceholder } = require("@plaiceholder/next")
 module.exports = withPlaiceholder({
 	reactStrictMode: true,
 	images: {
-		domains: [],
+		domains: ["static.wikia.nocookie.net"],
 	},
 	webpack: (config, { dev, isServer }) => {
 		// Replace React with Preact only in client production build

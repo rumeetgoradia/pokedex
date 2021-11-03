@@ -17,6 +17,7 @@
     "paths": {
       "@components/*": ["components/*"],
       "@constants": ["constants/index.ts"],
+      "@firebase": ["firebase/clientApp.ts"],
       "@images/*": ["public/images/*"],
       "@theme": ["theme/index.ts"],
       "@utils": ["utils/index.ts"],
