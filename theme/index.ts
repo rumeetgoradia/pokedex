@@ -11,6 +11,12 @@ const theme = extendTheme({
 	colors: {
 		types,
 	},
+	fonts: {
+		heading: "Kissinger JP",
+		body: "Kissinger JP",
+	},
 })
 
 export default theme
+
+export { default as Fonts } from "./fonts"
