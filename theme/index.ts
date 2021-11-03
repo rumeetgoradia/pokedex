@@ -1,13 +1,19 @@
 import { extendTheme } from "@chakra-ui/react"
 import { types } from "./typeColors"
 
-export type TypeColor = {
-	background: string
-	borderTop: string
-	borderBottom: string
-}
+export { default as Fonts } from "./fonts"
 
 const theme = extendTheme({
+	styles: {
+		global: {
+			html: {
+				scrollBehavior: "smooth",
+			},
+			body: {
+				scrollBehavior: "smooth",
+			},
+		},
+	},
 	colors: {
 		types,
 	},
@@ -18,5 +24,3 @@ const theme = extendTheme({
 })
 
 export default theme
-
-export { default as Fonts } from "./fonts"
