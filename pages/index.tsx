@@ -8,15 +8,14 @@ import {
 	Input,
 	InputGroup,
 	InputRightElement,
-	theme,
 } from "@chakra-ui/react"
+import { PokemonPreview } from "@components/Home"
 import { PokemonTypeDisplay } from "@components/PokemonTypeDisplay"
 import { Pokemon, PokemonType, POKEMON_TYPES } from "@constants"
 import db, { COLLECTION_NAME } from "@firebase"
-import { createTransition, fade } from "@utils"
+import { createTransition } from "@utils"
 import { collection, getDocs } from "firebase/firestore/lite"
 import type { GetStaticProps, NextPage } from "next"
-import Image from "next/image"
 import React, { useEffect, useState } from "react"
 import { GoSearch } from "react-icons/go"
 
@@ -44,12 +43,12 @@ const HomePage: NextPage<HomePageProps> = ({ pokemons }) => {
 
 	useEffect(() => {
 		if (!textFilter?.length && !typesFilter?.length) {
-			setDisplayedPokemons(pokemons)
+			setDisplayedPokemons([...pokemons])
 		} else if (textFilter.length && typesFilter.length) {
 			setDisplayedPokemons(
 				pokemons.filter(
 					(pokemon) =>
-						(pokemon.id.toLowerCase().startsWith(textFilter) ||
+						(pokemon.id.toLowerCase().includes(textFilter) ||
 							pokemon.name.toLowerCase().startsWith(textFilter) ||
 							pokemon.jaName.toLowerCase().startsWith(textFilter)) &&
 						typesFilter.every((type) =>
@@ -61,7 +60,7 @@ const HomePage: NextPage<HomePageProps> = ({ pokemons }) => {
 			setDisplayedPokemons(
 				pokemons.filter(
 					(pokemon) =>
-						pokemon.id.toLowerCase().startsWith(textFilter) ||
+						pokemon.id.toLowerCase().includes(textFilter) ||
 						pokemon.name.toLowerCase().startsWith(textFilter) ||
 						pokemon.jaName.toLowerCase().startsWith(textFilter)
 				)
@@ -75,6 +74,7 @@ const HomePage: NextPage<HomePageProps> = ({ pokemons }) => {
 				)
 			)
 		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [textFilter, typesFilter])
 
 	const handleTextFilterChange = (
@@ -97,14 +97,13 @@ const HomePage: NextPage<HomePageProps> = ({ pokemons }) => {
 
 	return (
 		<Container maxW="container.md">
-			<Box>
+			<Flex flexDirection="column" align="center">
 				<InputGroup>
 					<Input
 						placeholder="Search Pokémon ..."
 						size="md"
 						variant="flushed"
 						focusBorderColor="black"
-						borderColor={fade(theme.colors.white, 0.75)}
 						value={textFilter}
 						onChange={handleTextFilterChange}
 						_placeholder={{
@@ -135,44 +134,37 @@ const HomePage: NextPage<HomePageProps> = ({ pokemons }) => {
 						/>
 					</InputRightElement>
 				</InputGroup>
-			</Box>
-			<Flex justify="center" wrap="wrap" mr={-1} mb={-1} maxW="612px">
-				{POKEMON_TYPES.map((pokemonType) => (
-					<Box
-						w="64px"
-						mr={1}
-						mb={1}
-						cursor="pointer"
-						opacity={typesFilter.includes(pokemonType) ? 1 : 0.5}
-						transition={createTransition("opacity", "fast")}
-						onClick={() => handleTypesFilterChange(pokemonType)}
-						key={`${pokemonType}-filter-item`}
-					>
-						<PokemonTypeDisplay pokemonType={pokemonType} />
-					</Box>
-				))}
-			</Flex>
 
-			<Grid templateColumns="repeat(3, 1fr)" gap={6}>
+				<Flex justify="center" wrap="wrap" mt={4} mr={-1} mb={-1} maxW="612px">
+					{POKEMON_TYPES.map((pokemonType) => (
+						<Box
+							w="64px"
+							mr={1}
+							mb={1}
+							cursor="pointer"
+							opacity={typesFilter.includes(pokemonType) ? 1 : 0.5}
+							transition={createTransition("opacity", "fast")}
+							onClick={() => handleTypesFilterChange(pokemonType)}
+							key={`${pokemonType}-filter-item`}
+						>
+							<PokemonTypeDisplay pokemonType={pokemonType} />
+						</Box>
+					))}
+				</Flex>
+			</Flex>
+			<Grid
+				templateColumns={{
+					base: "repeat(1, 1fr)",
+					sm: "repeat(2, 1fr)",
+				}}
+				gap={4}
+				mt={4}
+			>
 				{displayedPokemons.map((pokemon) => {
-					const {
-						name,
-						id,
-						types,
-						images: { thumbnail },
-					} = pokemon
+					const { name, id } = pokemon
 					return (
-						<GridItem key={id} colSpan={1}>
-							{`${id} ${name} ${types}`}
-							<Flex w="full" h="230px" position="relative">
-								<Image
-									src={thumbnail.src}
-									alt={name}
-									layout="fill"
-									objectFit="contain"
-									quality={30}
-								/>
-							</Flex>
+						<GridItem colSpan={1} key={id}>
+							<PokemonPreview {...pokemon} />
 						</GridItem>
 					)
 				})}
