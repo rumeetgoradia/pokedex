@@ -7,14 +7,14 @@ class MyDocument extends Document {
 				<Head>
 					<link
 						rel="preload"
-						href="/fonts/KissingerJp.woff2"
+						href="fonts/KissingerJp.woff2"
 						as="font"
 						type="font/woff2"
 						crossOrigin="anonymous"
 					/>
 					<link
 						rel="preload"
-						href="/fonts/KissingerJp.ttf"
+						href="fonts/KissingerJp.ttf"
 						as="font"
 						type="font/ttf"
 						crossOrigin="anonymous"

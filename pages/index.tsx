@@ -11,11 +11,12 @@ import {
 } from "@chakra-ui/react"
 import { PokemonPreview } from "@components/Home"
 import { PokemonTypeDisplay } from "@components/PokemonTypeDisplay"
-import { Pokemon, PokemonType, POKEMON_TYPES } from "@constants"
+import { Pokemon, PokemonType, POKEMON_TYPES, SITE_NAME } from "@constants"
 import db, { COLLECTION_NAME } from "@firebase"
 import { createTransition } from "@utils"
 import { collection, getDocs } from "firebase/firestore/lite"
 import type { GetStaticProps, NextPage } from "next"
+import { NextSeo } from "next-seo"
 import React, { useEffect, useState } from "react"
 import { GoSearch } from "react-icons/go"
 
@@ -96,80 +97,90 @@ const HomePage: NextPage<HomePageProps> = ({ pokemons }) => {
 	}
 
 	return (
-		<Container maxW="container.md">
-			<Flex flexDirection="column" align="center">
-				<InputGroup>
-					<Input
-						placeholder="Search Pokémon ..."
-						size="md"
-						variant="flushed"
-						focusBorderColor="black"
-						value={textFilter}
-						onChange={handleTextFilterChange}
-						_placeholder={{
-							fontStyle: "italic",
-						}}
-					/>
-					<InputRightElement>
-						<IconButton
-							aria-label="Search Pokémon"
-							icon={<GoSearch />}
-							bg="transparent"
-							borderRadius="50%"
-							color="black"
-							opacity={0.75}
-							_hover={{
-								bg: "transparent",
-								transform: "scale(1.05)",
-								opacity: 1,
-							}}
-							_focus={{
-								bg: "transparent",
-								transform: "scale(1.05)",
-								opacity: 1,
-							}}
-							_active={{
-								transform: "scale(0.95)",
+		<>
+			<NextSeo title={SITE_NAME} titleTemplate="%s" />
+			<Container maxW="container.md">
+				<Flex flexDirection="column" align="center">
+					<InputGroup>
+						<Input
+							placeholder="Search Pokémon ..."
+							size="md"
+							variant="flushed"
+							focusBorderColor="black"
+							value={textFilter}
+							onChange={handleTextFilterChange}
+							_placeholder={{
+								fontStyle: "italic",
 							}}
 						/>
-					</InputRightElement>
-				</InputGroup>
+						<InputRightElement>
+							<IconButton
+								aria-label="Search Pokémon"
+								icon={<GoSearch />}
+								bg="transparent"
+								borderRadius="50%"
+								color="black"
+								opacity={0.75}
+								_hover={{
+									bg: "transparent",
+									transform: "scale(1.05)",
+									opacity: 1,
+								}}
+								_focus={{
+									bg: "transparent",
+									transform: "scale(1.05)",
+									opacity: 1,
+								}}
+								_active={{
+									transform: "scale(0.95)",
+								}}
+							/>
+						</InputRightElement>
+					</InputGroup>
 
-				<Flex justify="center" wrap="wrap" mt={4} mr={-1} mb={-1} maxW="612px">
-					{POKEMON_TYPES.map((pokemonType) => (
-						<Box
-							w="64px"
-							mr={1}
-							mb={1}
-							cursor="pointer"
-							opacity={typesFilter.includes(pokemonType) ? 1 : 0.5}
-							transition={createTransition("opacity", "fast")}
-							onClick={() => handleTypesFilterChange(pokemonType)}
-							key={`${pokemonType}-filter-item`}
-						>
-							<PokemonTypeDisplay pokemonType={pokemonType} />
-						</Box>
-					))}
+					<Flex
+						justify="center"
+						wrap="wrap"
+						mt={4}
+						mr={-1}
+						mb={-1}
+						maxW="612px"
+					>
+						{POKEMON_TYPES.map((pokemonType) => (
+							<Box
+								w="64px"
+								mr={1}
+								mb={1}
+								cursor="pointer"
+								opacity={typesFilter.includes(pokemonType) ? 1 : 0.5}
+								transition={createTransition("opacity", "fast")}
+								onClick={() => handleTypesFilterChange(pokemonType)}
+								key={`${pokemonType}-filter-item`}
+							>
+								<PokemonTypeDisplay pokemonType={pokemonType} />
+							</Box>
+						))}
+					</Flex>
 				</Flex>
-			</Flex>
-			<Grid
-				templateColumns={{
-					base: "repeat(1, 1fr)",
-					sm: "repeat(2, 1fr)",
-				}}
-				gap={4}
-				mt={4}
-			>
-				{displayedPokemons.map((pokemon) => {
-					const { name, id } = pokemon
-					return (
-						<GridItem colSpan={1} key={id}>
-							<PokemonPreview {...pokemon} />
-						</GridItem>
-					)
-				})}
-			</Grid>
-		</Container>
+				<Grid
+					templateColumns={{
+						base: "repeat(1, 1fr)",
+						sm: "repeat(2, 1fr)",
+					}}
+					gap={4}
+					mt={4}
+				>
+					{displayedPokemons.map((pokemon) => {
+						const { id } = pokemon
+						return (
+							<GridItem colSpan={1} key={id}>
+								<PokemonPreview {...pokemon} />
+							</GridItem>
+						)
+					})}
+				</Grid>
+			</Container>
+		</>
 	)
 }
 

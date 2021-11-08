@@ -19,11 +19,11 @@ const PokemonTypeDisplay: React.FC<PokemonTypeDisplayProps> = ({
 			w="full"
 			px={2}
 			py={"3px"}
-			bg={`types.${pokemonType}.background`}
+			bg={`types.${pokemonType.toLowerCase()}.background`}
 			borderTop="1px"
 			borderBottom="1px"
-			borderTopColor={`types.${pokemonType}.borderTop`}
-			borderBottomColor={`types.${pokemonType}.borderBottom`}
+			borderTopColor={`types.${pokemonType.toLowerCase()}.borderTop`}
+			borderBottomColor={`types.${pokemonType.toLowerCase()}.borderBottom`}
 			borderRadius="3px"
 		>
 			{pokemonType}

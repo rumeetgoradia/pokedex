@@ -3,7 +3,7 @@ import { Box, Flex, Text } from "@chakra-ui/react"
 import { PokemonTypeDisplay } from "@components/PokemonTypeDisplay"
 import { Pokemon, PokemonType } from "@constants"
 import { createTransition } from "@utils"
-import Image from "next/image"
+import NextImage from "next/image"
 import NextLink from "next/link"
 import React from "react"
 
@@ -15,7 +15,7 @@ const PokemonPreview: React.FC<Pokemon> = ({
 	images: { thumbnail },
 }) => {
 	return (
-		<NextLink href={`/pokemon/${name}`} passHref>
+		<NextLink href={`/pokemon/${id}`} passHref>
 			<Flex
 				as="a"
 				justify="space-between"
@@ -37,7 +37,7 @@ const PokemonPreview: React.FC<Pokemon> = ({
 					mr={{ base: 3, sm: 0, md: 3 }}
 					mb={{ sm: 3, md: 0 }}
 				>
-					<Image
+					<NextImage
 						src={thumbnail.src}
 						alt={name}
 						layout="fill"
