@@ -1,6 +1,6 @@
 import {
 	Box,
-	Container,
+	Button,
 	Flex,
 	Grid,
 	GridItem,
@@ -19,6 +19,7 @@ import type { GetStaticProps, NextPage } from "next"
 import { NextSeo } from "next-seo"
 import React, { useEffect, useState } from "react"
 import { GoSearch } from "react-icons/go"
+import { MdOutlineClear } from "react-icons/md"
 
 export const getStaticProps: GetStaticProps = async () => {
 	const pokemonsCollection = collection(db, COLLECTION_NAME)
@@ -96,56 +97,53 @@ const HomePage: NextPage<HomePageProps> = ({ pokemons }) => {
 		setTypesFilter(newTypesFilter)
 	}
 
+	const clearFilters = () => {
+		setTextFilter("")
+		setTypesFilter([])
+	}
+
 	return (
 		<>
 			<NextSeo title={SITE_NAME} titleTemplate="%s" />
-			<Container maxW="container.md">
-				<Flex flexDirection="column" align="center">
-					<InputGroup>
-						<Input
-							placeholder="Search Pokémon ..."
-							size="md"
-							variant="flushed"
-							focusBorderColor="black"
-							value={textFilter}
-							onChange={handleTextFilterChange}
-							_placeholder={{
-								fontStyle: "italic",
+			<Flex flexDirection="column" align="center">
+				<InputGroup>
+					<Input
+						placeholder="Search Pokémon ..."
+						size="md"
+						variant="flushed"
+						focusBorderColor="black"
+						value={textFilter}
+						onChange={handleTextFilterChange}
+						_placeholder={{
+							fontStyle: "italic",
+						}}
+					/>
+					<InputRightElement>
+						<IconButton
+							aria-label="Search Pokémon"
+							icon={<GoSearch />}
+							bg="transparent"
+							borderRadius="50%"
+							color="black"
+							opacity={0.75}
+							_hover={{
+								bg: "transparent",
+								transform: "scale(1.05)",
+								opacity: 1,
+							}}
+							_focus={{
+								bg: "transparent",
+								transform: "scale(1.05)",
+								opacity: 1,
+							}}
+							_active={{
+								transform: "scale(0.95)",
 							}}
 						/>
-						<InputRightElement>
-							<IconButton
-								aria-label="Search Pokémon"
-								icon={<GoSearch />}
-								bg="transparent"
-								borderRadius="50%"
-								color="black"
-								opacity={0.75}
-								_hover={{
-									bg: "transparent",
-									transform: "scale(1.05)",
-									opacity: 1,
-								}}
-								_focus={{
-									bg: "transparent",
-									transform: "scale(1.05)",
-									opacity: 1,
-								}}
-								_active={{
-									transform: "scale(0.95)",
-								}}
-							/>
-						</InputRightElement>
-					</InputGroup>
-
-					<Flex
-						justify="center"
-						wrap="wrap"
-						mt={4}
-						mr={-1}
-						mb={-1}
-						maxW="612px"
-					>
+					</InputRightElement>
+				</InputGroup>
+				<Flex mt={4} w="full" justify={{ base: "center", md: "flex-start" }}>
+					<Flex justify="center" mr={-1} mb={-1} wrap="wrap" maxW="612px">
 						{POKEMON_TYPES.map((pokemonType) => (
 							<Box
 								w="64px"
@@ -154,6 +152,12 @@ const HomePage: NextPage<HomePageProps> = ({ pokemons }) => {
 								cursor="pointer"
 								opacity={typesFilter.includes(pokemonType) ? 1 : 0.5}
 								transition={createTransition("opacity", "fast")}
+								_hover={{
+									opacity: 0.75,
+								}}
+								_focus={{
+									opacity: 0.75,
+								}}
 								onClick={() => handleTypesFilterChange(pokemonType)}
 								key={`${pokemonType}-filter-item`}
 							>
@@ -161,25 +165,52 @@ const HomePage: NextPage<HomePageProps> = ({ pokemons }) => {
 							</Box>
 						))}
 					</Flex>
+					<IconButton
+						aria-label="Clear filters"
+						title="Clear filters"
+						icon={<MdOutlineClear />}
+						onClick={clearFilters}
+						ml={4}
+						flex="1"
+						h="48px"
+						colorScheme="red"
+						display={{ base: "none", md: "flex" }}
+						disabled={!textFilter?.length && !typesFilter?.length}
+					/>
 				</Flex>
-				<Grid
-					templateColumns={{
-						base: "repeat(1, 1fr)",
-						sm: "repeat(2, 1fr)",
-					}}
-					gap={4}
+				<Button
+					onClick={clearFilters}
+					disabled={!textFilter?.length && !typesFilter?.length}
+					aria-label="Clear filters"
+					title="Clear filters"
+					w="full"
+					textTransform="uppercase"
+					letterSpacing={2}
 					mt={4}
+					colorScheme="red"
+					display={{ md: "none" }}
 				>
-					{displayedPokemons.map((pokemon) => {
-						const { id } = pokemon
-						return (
-							<GridItem colSpan={1} key={id}>
-								<PokemonPreview {...pokemon} />
-							</GridItem>
-						)
-					})}
-				</Grid>
-			</Container>
+					Clear filters
+				</Button>
+			</Flex>
+
+			<Grid
+				templateColumns={{
+					base: "repeat(1, 1fr)",
+					sm: "repeat(2, 1fr)",
+				}}
+				gap={4}
+				mt={8}
+			>
+				{displayedPokemons.map((pokemon) => {
+					const { id } = pokemon
+					return (
+						<GridItem colSpan={1} key={id}>
+							<PokemonPreview {...pokemon} />
+						</GridItem>
+					)
+				})}
+			</Grid>
 		</>
 	)
 }

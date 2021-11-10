@@ -16,6 +16,7 @@ const theme = extendTheme({
 	},
 	colors: {
 		types,
+		brand: "rgb(52, 146, 110)",
 	},
 	fonts: {
 		heading: "Kissinger JP",
