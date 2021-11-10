@@ -80,7 +80,7 @@ const PokemonPage: NextPage<PokemonPageProps> = ({ pokemon }) => {
 	return (
 		<>
 			<NextSeo title={name} />
-			<VStack spacing={6} align="flex-start">
+			<VStack spacing={6} align="flex-start" pb={6}>
 				<Box
 					bg="gray.50"
 					p={4}
