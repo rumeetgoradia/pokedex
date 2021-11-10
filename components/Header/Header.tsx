@@ -28,7 +28,7 @@ const Header: React.FC = () => {
 				<PokeBallIcon h={{ base: "60px", sm: "80px" }} w="auto" />
 				<Text
 					as="h1"
-					fontSize={{ base: "5xl", sm: "7xl" }}
+					fontSize={{ base: "4xl", sm: "7xl" }}
 					fontWeight="black"
 					display="inline-block"
 					mb={2}

@@ -107,7 +107,7 @@ const PokemonPage: NextPage<PokemonPageProps> = ({ pokemon }) => {
 						mt={3}
 					>
 						{name}
-						<Box as="span" ml={4} fontStyle="italic" opacity={0.3}>
+						<Box as="span" ml={4} fontStyle="italic" opacity={0.3} pr={2}>
 							{id}
 						</Box>
 						<Box
