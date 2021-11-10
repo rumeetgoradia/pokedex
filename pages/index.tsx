@@ -146,6 +146,8 @@ const HomePage: NextPage<HomePageProps> = ({ pokemons }) => {
 					<Flex justify="center" mr={-1} mb={-1} wrap="wrap" maxW="612px">
 						{POKEMON_TYPES.map((pokemonType) => (
 							<Box
+								as="button"
+								aria-label={`${pokemonType} type filter`}
 								w="64px"
 								mr={1}
 								mb={1}
@@ -153,9 +155,6 @@ const HomePage: NextPage<HomePageProps> = ({ pokemons }) => {
 								opacity={typesFilter.includes(pokemonType) ? 1 : 0.5}
 								transition={createTransition("opacity", "fast")}
 								_hover={{
-									opacity: 0.75,
-								}}
-								_focus={{
 									opacity: 0.75,
 								}}
 								onClick={() => handleTypesFilterChange(pokemonType)}

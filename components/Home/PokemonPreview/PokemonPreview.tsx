@@ -52,6 +52,7 @@ const PokemonPreview: React.FC<Pokemon> = ({
 							textAlign="right"
 							fontSize="3xl"
 							lineHeight={1}
+							pr={1}
 							fontStyle="italic"
 							fontWeight="bold"
 							opacity={0.3}
