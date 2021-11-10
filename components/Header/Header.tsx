@@ -25,14 +25,14 @@ const Header: React.FC = () => {
 				justify={router.pathname === "/" ? "center" : "flex-start"}
 				flex="1"
 			>
-				<PokeBallIcon h={{ base: "60px", sm: "80px" }} w="auto" />
+				<PokeBallIcon h={{ base: "50px", sm: "80px" }} w="auto" />
 				<Text
 					as="h1"
 					fontSize={{ base: "4xl", sm: "7xl" }}
 					fontWeight="black"
 					display="inline-block"
-					mb={2}
-					ml={2}
+					mb={{ base: 1, sm: 2 }}
+					ml={{ base: 1, sm: 2 }}
 					lineHeight={1}
 				>
 					<Box as="span" color="brand" cursor="pointer">

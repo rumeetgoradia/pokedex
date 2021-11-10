@@ -80,24 +80,27 @@ const PokemonPage: NextPage<PokemonPageProps> = ({ pokemon }) => {
 	return (
 		<>
 			<NextSeo title={name} />
-			<VStack spacing={6} align="flex-start" pb={6}>
-				<Box
+			<VStack spacing={6} align="flex-start" pb={10}>
+				<Flex
 					bg="gray.50"
+					w="full"
 					p={4}
 					mb={-6}
 					borderRadius="lg"
+					justify="center"
 					display={{ sm: "none" }}
 				>
-					<Box w="full" position="relative">
+					<Flex w="full" justify="center">
 						<NextImage
 							src={images.thumbnail.src}
 							width={images.thumbnail.width}
 							height={images.thumbnail.height}
 							objectFit="contain"
+							objectPosition="center"
 							alt={name}
 						/>
-					</Box>
-				</Box>
+					</Flex>
+				</Flex>
 				<Box w="full">
 					<Text
 						as="h1"
