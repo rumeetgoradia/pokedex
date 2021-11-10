@@ -61,8 +61,10 @@ type PokemonPageProps = {
 	pokemon: Pokemon
 }
 
-const PokemonPage: NextPage<PokemonPageProps> = ({
-	pokemon: {
+const PokemonPage: NextPage<PokemonPageProps> = ({ pokemon }) => {
+	if (!pokemon) return <div>Loading...</div>
+
+	const {
 		name,
 		id,
 		images,
@@ -73,8 +75,8 @@ const PokemonPage: NextPage<PokemonPageProps> = ({
 		height,
 		weight,
 		evolutions,
-	},
-}) => {
+	} = pokemon
+
 	return (
 		<>
 			<NextSeo title={name} />
