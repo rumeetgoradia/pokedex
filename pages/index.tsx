@@ -50,9 +50,11 @@ const HomePage: NextPage<HomePageProps> = ({ pokemons }) => {
 			setDisplayedPokemons(
 				pokemons.filter(
 					(pokemon) =>
-						(pokemon.id.toLowerCase().includes(textFilter) ||
-							pokemon.name.toLowerCase().startsWith(textFilter) ||
-							pokemon.jaName.toLowerCase().startsWith(textFilter)) &&
+						(pokemon.id.toLowerCase().includes(textFilter.toLowerCase()) ||
+							pokemon.name.toLowerCase().startsWith(textFilter.toLowerCase()) ||
+							pokemon.jaName
+								.toLowerCase()
+								.startsWith(textFilter.toLowerCase())) &&
 						typesFilter.every((type) =>
 							pokemon.types.map((_type) => _type.toLowerCase()).includes(type)
 						)
@@ -62,9 +64,9 @@ const HomePage: NextPage<HomePageProps> = ({ pokemons }) => {
 			setDisplayedPokemons(
 				pokemons.filter(
 					(pokemon) =>
-						pokemon.id.toLowerCase().includes(textFilter) ||
-						pokemon.name.toLowerCase().startsWith(textFilter) ||
-						pokemon.jaName.toLowerCase().startsWith(textFilter)
+						pokemon.id.toLowerCase().includes(textFilter.toLowerCase()) ||
+						pokemon.name.toLowerCase().startsWith(textFilter.toLowerCase()) ||
+						pokemon.jaName.toLowerCase().startsWith(textFilter.toLowerCase())
 				)
 			)
 		} else if (typesFilter.length) {

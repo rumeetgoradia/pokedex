@@ -48,7 +48,7 @@ const Header: React.FC = () => {
 						fontSize="2xl"
 						w="auto"
 						h="auto"
-						bg="none"
+						bg="none !important"
 						icon={<IoHomeSharp />}
 						aria-label="Return to home"
 						title="Return to home"
